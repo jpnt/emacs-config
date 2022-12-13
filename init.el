@@ -6,6 +6,7 @@
 (recentf-mode t)
 (save-place-mode t)
 (global-auto-revert-mode t)
+(electric-pair-mode t)
 
 (setq iso-transl-char-map nil)
 (setq inhibit-startup-screen t)
@@ -45,7 +46,7 @@
   :init (global-flycheck-mode t))
 
 (use-package yasnippet
-  :init (yas-global-mode))
+  :init (yas-global-mode t))
 
 (use-package company)
 
@@ -56,14 +57,17 @@
          ("M-X" . smex-major-mode-commands)))
 
 (use-package rainbow-delimiters
-  :init (rainbow-delimiters-mode t))
-
+  :hook (prog-mode . rainbow-delimiters-mode))
+  
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
 
 (use-package magit
   :bind (("C-x g" . magit-status)
          ("C-x C-g" . magit-status)))
+
+(use-package format-all
+  :init (format-all-mode t))
 
 (use-package clojure-mode)
 (use-package cider)
