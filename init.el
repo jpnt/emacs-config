@@ -34,14 +34,29 @@
         use-package-expand-minimally t))
 
 ;; Packages
-(use-package projectile)
+(use-package better-defaults)
+
+(use-package projectile
+  :init (projectile-mode t)
+  :bind (:map projectile-mode-map
+              ("C-x p" . projectile-command-map)))
+
+(use-package flycheck
+  :init (global-flycheck-mode t))
+
+(use-package yasnippet
+  :init (yas-global-mode))
+
+(use-package company)
+
+(use-package evil)
 
 (use-package smex
-  :config
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands)))
 
-(use-package better-defaults)
+(use-package rainbow-delimiters
+  :init (rainbow-delimiters-mode t))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
@@ -53,9 +68,3 @@
 (use-package clojure-mode)
 (use-package cider)
 (use-package inf-clojure)
-
-(use-package evil)
-
-(use-package rainbow-delimiters)
-
-(use-package company)
