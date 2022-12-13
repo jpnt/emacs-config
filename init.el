@@ -5,6 +5,7 @@
 (global-display-line-numbers-mode t)
 (recentf-mode t)
 (save-place-mode t)
+(global-auto-revert-mode t)
 
 (setq iso-transl-char-map nil)
 (setq inhibit-startup-screen t)
@@ -37,14 +38,14 @@
 
 (use-package smex
   :config
-  (global-set-key (kbd "M-x") 'smex)                      
+  (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands))
 
 (use-package better-defaults)
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
-  
+
 (use-package magit
   :bind (("C-x g" . magit-status)
          ("C-x C-g" . magit-status)))
