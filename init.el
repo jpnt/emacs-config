@@ -48,7 +48,8 @@
 (use-package yasnippet
   :init (yas-global-mode t))
 
-(use-package company)
+(use-package company
+  :hook prog-mode)
 
 (use-package evil)
 
@@ -58,7 +59,7 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
-  
+
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
 
