@@ -58,8 +58,8 @@
          ("M-X" . smex-major-mode-commands)))
 
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
+  :hook prog-mode)
+  
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
 
@@ -71,7 +71,10 @@
   :init (format-all-mode t))
 
 (use-package undo-tree
-    :init (undo-tree-mode))
+  :hook prog-mode)
+    
+(use-package ido-vertical-mode
+  :init (ido-vertical-mode t))
 
 (use-package clojure-mode)
 (use-package cider)
