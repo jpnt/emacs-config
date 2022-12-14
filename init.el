@@ -70,6 +70,9 @@
 (use-package format-all
   :init (format-all-mode t))
 
+(use-package undo-tree
+    :init (undo-tree-mode))
+
 (use-package clojure-mode)
 (use-package cider)
 (use-package inf-clojure)
