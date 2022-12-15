@@ -49,7 +49,7 @@
   :init (yas-global-mode t))
 
 (use-package company
-  :hook prog-mode)
+  :init (global-company-mode t))
 
 (use-package evil)
 
@@ -75,6 +75,13 @@
     
 (use-package ido-vertical-mode
   :init (ido-vertical-mode t))
+
+(use-package ace-jump-mode
+  :bind ("C-." . ace-jump-mode))
+
+(use-package eglot)
+
+(use-package rust-mode)
 
 (use-package clojure-mode)
 (use-package cider)
