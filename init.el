@@ -86,7 +86,7 @@
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((rust-mode) "rust-analyzer"))
-  (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
+  (add-to-list 'eglot-server-programs '((python-mode) "pylsp"))
   (add-to-list 'eglot-server-programs '((java-mode) "jdtls"))
   :hook
   (c-mode . eglot-ensure)
