@@ -105,6 +105,6 @@
 
 ;; Keybinds (built-in)
 (global-set-key (kbd "C-c f n") 'flymake-goto-next-error)
-(global-set-key (kbd "C-c f p") 'flymake-goto-next-error)
+(global-set-key (kbd "C-c f p") 'flymake-goto-prev-error)
 (global-set-key (kbd "C-c x d") 'xref-find-definitions)
 (global-set-key (kbd "C-c x r") 'xref-find-references)
