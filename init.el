@@ -81,6 +81,9 @@
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
 
+(use-package vterm
+  :bind ("C-c t" . vterm))
+
 ;; LSP
 (use-package eglot
   :config
