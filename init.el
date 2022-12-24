@@ -73,7 +73,9 @@
   :init (format-all-mode t))
 
 (use-package undo-tree
-  :hook prog-mode)
+  :hook prog-mode
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 
 (use-package ido-vertical-mode
   :init (ido-vertical-mode t))
