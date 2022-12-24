@@ -14,7 +14,6 @@
 (setq auto-mode-case-fold nil)
 (setq use-short-answers t)
 (setq confirm-kill-processes nil)
-(setq ido-enable-prefix t)
 
 (defvar user-setup-directory          (expand-file-name "setUp"          user-emacs-directory))
 (defvar user-setup-builtins-directory (expand-file-name "setup/builtins" user-emacs-directory))
