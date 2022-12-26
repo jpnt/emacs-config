@@ -14,6 +14,7 @@
 (setq auto-mode-case-fold nil)
 (setq use-short-answers t)
 (setq confirm-kill-processes nil)
+(setq org-hide-emphasis-markers t)
 
 (defvar user-setup-directory          (expand-file-name "setUp"          user-emacs-directory))
 (defvar user-setup-builtins-directory (expand-file-name "setup/builtins" user-emacs-directory))
@@ -73,7 +74,7 @@
   :init (format-all-mode t))
 
 (use-package undo-tree
-  :hook prog-mode
+  :hook prog-mode org-mode
   :config
   (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 
@@ -85,6 +86,12 @@
 
 (use-package vterm
   :bind ("C-c t" . vterm))
+
+(use-package org-bullets
+  :hook org-mode)
+
+(use-package nov
+  :mode ("\\.epub\\'" . nov-mode))
 
 ;; LSP
 (use-package eglot
