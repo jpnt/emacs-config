@@ -93,6 +93,9 @@
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
 
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
 ;; LSP
 (use-package eglot
   :config
