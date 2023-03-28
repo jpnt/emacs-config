@@ -1,13 +1,11 @@
-(load-theme 'modus-vivendi)
-
 (prefer-coding-system 'utf-8-unix)
 (set-language-environment "UTF-8")
-
 (global-display-line-numbers-mode t)
 (recentf-mode t)
 (save-place-mode t)
 (global-auto-revert-mode t)
-(electric-pair-mode t)
+(electric-pair-mode t) 
+(put 'upcase-region 'disabled nil)
 
 (setq iso-transl-char-map nil)
 (setq inhibit-startup-screen t)
@@ -41,6 +39,10 @@
 ;; Packages
 (use-package better-defaults)
 
+(use-package solarized-theme
+  :init (load-theme 'solarized-dark t))
+
+         
 (use-package projectile
   :init (projectile-mode t)
   :bind (:map projectile-mode-map
@@ -86,9 +88,6 @@
 
 (use-package vterm
   :bind ("C-c t" . vterm))
-
-(use-package org-bullets
-  :hook org-mode)
 
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
