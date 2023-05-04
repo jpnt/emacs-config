@@ -1,3 +1,4 @@
+(set-frame-font "Hack Nerd Font 14")
 (prefer-coding-system 'utf-8-unix)
 (set-language-environment "UTF-8")
 (global-display-line-numbers-mode t)
@@ -41,7 +42,6 @@
 
 (use-package solarized-theme
   :init (load-theme 'solarized-dark t))
-
          
 (use-package projectile
   :init (projectile-mode t)
