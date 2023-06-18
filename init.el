@@ -110,9 +110,6 @@
 
 (use-package rust-mode)
 
-(use-package clojure-mode)
-(use-package cider)
-
 ;; Keybinds (built-in)
 (global-set-key (kbd "C-c f n") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c f p") 'flymake-goto-prev-error)
