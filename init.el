@@ -1,4 +1,3 @@
-(set-frame-font "Hack Nerd Font 14")
 (prefer-coding-system 'utf-8-unix)
 (set-language-environment "UTF-8")
 (global-display-line-numbers-mode t)
