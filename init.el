@@ -13,6 +13,7 @@
 (setq use-short-answers t)
 (setq confirm-kill-processes nil)
 (setq org-hide-emphasis-markers t)
+(setq warning-minimum-level :emergency)
 
 (defvar user-setup-directory          (expand-file-name "setUp"          user-emacs-directory))
 (defvar user-setup-builtins-directory (expand-file-name "setup/builtins" user-emacs-directory))
@@ -38,6 +39,12 @@
 
 ;; Packages
 (use-package better-defaults)
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package solarized-theme
   :init (load-theme 'solarized-dark t))
@@ -82,17 +89,13 @@
 (use-package ido-vertical-mode
   :init (ido-vertical-mode t))
 
-(use-package ace-jump-mode
-  :bind ("C-c SPC" . ace-jump-mode))
-
 (use-package vterm
   :bind ("C-c t" . vterm))
 
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
 
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
+(use-package rust-mode)
 
 ;; LSP
 (use-package eglot
@@ -107,8 +110,6 @@
   (rust-mode . eglot-ensure)
   (python-mode . eglot-ensure)
   (java-mode . eglot-ensure))
-
-(use-package rust-mode)
 
 ;; Keybinds (built-in)
 (global-set-key (kbd "C-c f n") 'flymake-goto-next-error)
