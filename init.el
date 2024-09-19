@@ -67,6 +67,10 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
       ediff-split-window-function 'split-window-horizontally)
 
+;; Relative line number
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
+
 ;;; Core Plugins
 
 ;; Better defaults
