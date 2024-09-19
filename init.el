@@ -1,102 +1,142 @@
-(prefer-coding-system 'utf-8-unix)
-(set-language-environment "UTF-8")
-(global-display-line-numbers-mode t)
-(recentf-mode t)
-(save-place-mode t)
-(global-auto-revert-mode t)
-(electric-pair-mode t) 
-(put 'upcase-region 'disabled nil)
+;;; init.el -- Main Emacs Configuration
+;; Font size
+(set-face-attribute 'default nil :height 140)
 
-(setq iso-transl-char-map nil)
-(setq inhibit-startup-screen t)
-(setq auto-mode-case-fold nil)
-(setq use-short-answers t)
-(setq confirm-kill-processes nil)
-(setq org-hide-emphasis-markers t)
+;; Restore reasonable garbage collection thresholds after startup
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 20 1024 1024))))  ;; 20MB
 
-(defvar user-setup-directory          (expand-file-name "setUp"          user-emacs-directory))
-(defvar user-setup-builtins-directory (expand-file-name "setup/builtins" user-emacs-directory))
-(defvar local-dev-package-directory   (expand-file-name "packages"       user-emacs-directory))
-(defvar user-data-directory           (expand-file-name ""               user-emacs-directory))
-(defvar user-cache-directory          (expand-file-name ".cache"         user-emacs-directory))
-(defvar user-bin-directory            (expand-file-name "bin"            "~"))
-(setq custom-file                     (expand-file-name "custom.el"      user-emacs-directory))
-(setq backup-directory-alist '(("." . "~/.emacs.d/.emacs_saves")))
-(make-directory user-cache-directory t)
+;; Disable excessive UI updates
+(setq cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
 
+;; Suppress warnings about the legacy advice API
+(setq ad-redefinition-action 'accept)
+
+;; Package management setup
 (require 'package)
-(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/"))
+      package-archive-priorities '(("melpa" . 10) ("gnu" . 5)))
 (package-initialize)
 
+;; Use-package for efficient package management
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-and-compile
   (setq use-package-always-ensure t
-        use-package-expand-minimally t))
+        use-package-expand-minimally t
+        use-package-always-defer t  ;; Defer loading by default to improve startup time
+        use-package-verbose nil))   ;; Suppress verbose output for cleaner logs
 
-;; Packages
+;;; Performance Optimizations
+
+;; Prevent excessive UI updates
+(setq redisplay-skip-fontification-on-input t)
+
+;; Auto-save and backup file management
+(setq backup-directory-alist '(("." . "~/.emacs.d/.emacs_saves"))
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+      make-backup-files nil  ;; Disable backup files
+      create-lockfiles nil)  ;; Disable lock files
+
+;; Smooth scrolling and buffer configuration
+(setq scroll-conservatively 101
+      scroll-margin 1
+      scroll-step 1
+      mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      scroll-preserve-screen-position 1)
+
+;;; UI Enhancements
+
+;; Disable beeping and blinking to avoid distractions
+(setq ring-bell-function 'ignore)
+(blink-cursor-mode -1)
+
+;; Configure recentf and savehist
+(recentf-mode 1)
+(savehist-mode 1)
+
+;; Fringe and buffer boundaries
+(set-fringe-mode 10)
+(setq-default indicate-buffer-boundaries 'left)
+
+;;; Ediff Configuration (single frame, horizontal split)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
+
+;;; Core Plugins
+
+;; Better defaults
 (use-package better-defaults)
 
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
-
+;; Fast navigation
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
 
-(use-package solarized-theme
-  :init (load-theme 'solarized-dark t))
-         
-(use-package projectile
-  :init (projectile-mode t)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
-
-(use-package yasnippet
-  :init (yas-global-mode t))
-
-(use-package yasnippet-snippets)
-
-(use-package company
-  :init (global-company-mode t))
-
-(use-package evil)
-
+;; Better Mx, not Ivy
 (use-package smex
   :bind (("M-x" . smex)
          ("M-X" . smex-major-mode-commands)))
 
-(use-package rainbow-delimiters
-  :hook prog-mode)
-
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
 
+;; Which-key - Help with keybindings
+(use-package which-key
+  :init (which-key-mode t)
+  :config (setq which-key-idle-delay 0.5))  ;; Show keybindings after 0.5s delay
+
+;; Flycheck for on-the-fly syntax checking
+(use-package flycheck
+  :init (global-flycheck-mode t))
+
+;; Super-save - Automatically save buffers on focus loss
+(use-package super-save
+  :init (super-save-mode t))
+
+;; Undo-tree - Enhanced undo functionality
+(use-package undo-tree
+  :init (global-undo-tree-mode)
+  :config (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+
+;; Vterm - Terminal emulator
+(use-package vterm
+  :bind ("C-c t" . vterm))
+
+;; Projectile - Project management
+(use-package projectile
+  :init (projectile-mode t)
+  :config (setq projectile-enable-caching t)  ;; Cache for faster project switching
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
+
+;; Auto-completion
+(use-package company
+  :init (global-company-mode t))
+
+;; Evil mode for Vim bindings
+(setq evil-want-C-u-scroll t)
+(use-package evil
+  :init (evil-mode t))
+
+;; Magit - Git integration
 (use-package magit
   :bind (("C-c g" . magit-status)
          ("C-c C-g" . magit-status)))
 
-(use-package format-all
-  :init (format-all-mode t))
+;; Syntax highlighting for programming
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package undo-tree
-  :hook prog-mode org-mode
-  :config
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+;;; Appearance Settings
 
-(use-package ido-vertical-mode
-  :init (ido-vertical-mode t))
+;; Built-in Modus theme (dark)
+(load-theme 'modus-vivendi t)
 
-(use-package vterm
-  :bind ("C-c t" . vterm))
-
-(use-package nov
-  :mode ("\\.epub\\'" . nov-mode))
-
-(use-package rust-mode)
-
-;; LSP
+;;; LSP Configuration (eglot)
 (use-package eglot
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
@@ -110,6 +150,42 @@
   (python-mode . eglot-ensure)
   (java-mode . eglot-ensure))
 
-;; Keybinds (built-in)
-(global-set-key (kbd "C-c f n") 'flymake-goto-next-error)
-(global-set-key (kbd "C-c f p") 'flymake-goto-prev-error)
+;;; Startup Optimization
+
+;; Reduced GC threshold during operation (20MB)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 20 1024 1024))))
+
+;; Set scratch buffer to fundamental-mode to reduce startup time
+(setq initial-scratch-message nil
+      initial-major-mode 'fundamental-mode)
+
+;; Deferred loading of toolbars and menus to improve startup
+(add-hook 'emacs-startup-hook (lambda () (tool-bar-mode -1)))
+
+;; Startup time
+(defun efs/display-startup-time ()
+  (message
+   "Emacs loaded in %s with %d garbage collections."
+   (format
+    "%.2f seconds"
+    (float-time
+     (time-subtract after-init-time before-init-time)))
+   gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
+(provide 'init)
+;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

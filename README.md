@@ -1,12 +1,60 @@
 # emacs-config
 
-This is my personal emacs config. This is what I find works best for me.
-So, naturally, it is not going to work well for everyone, it is not a general configuration.
+This is my personal Emacs configuration, optimized for my workflow and preferences.
+It is not meant to be a general-purpose configuration, but rather one that emphasizes
+simplicity, speed, and minimalism while using the latest Emacs features.
 
-# Goals
+Key features:
 
-- Reduce as much configuration as possible. Less configuration == better.
-- Extremely simple to modify init.el (configuration file). Even if you don't know Emacs Lisp.
-- Fast and lightweight, I want emacs to run pretty much on any machine I get my hands on.
-- Reduce as much drag as possible, I want to things as quickly as possible without plugins getting on the way.
-- Get basic IDE features such as Git integration (magit), file explorer (dired), auto-complete (company) with lsp (eglot).
+- **Fast startup**: Using early-init.el and streamlining the package setup.
+- **e(vi)l mode**: For vi/vim-style keybindings.
+- **Minimal plugins**: To keep the setup lightweight and maintainable over the years.
+- **No org-mode**: I don’t like it.
+- **Alternative to eglot**: I use `lspce` for LSP support, as it requires less 
+  configuration and is more minimalistic.
+
+```sh
+git clone https://github.com/zbelial/lspce ~/.emacs.d/lspce --depth=1
+git clone https://github.com/jpnt/emacs-config $XDG_CONFIG_HOME/emacs --depth=1
+```
+
+## Goals
+
+- **Minimal Configuration**: Less is more. Less configuration == better.
+- **Ease of Modification**: The `init.el` should be easy to understand and modify,
+  even for those unfamiliar with Emacs Lisp.
+- **Fast and Lightweight**: Emacs should run efficiently on (almost) any machine. Fast startup time.
+- **Streamlined Workflow**: Reduce friction, allowing for fast operations without
+  plugins or configurations getting in the way.
+- **Basic IDE Features**: Includes Git integration (`magit`), file explorer (`dired`),
+  auto-completion (`company`), and language server protocol (via `lspce`).
+
+## Installation of emacs from source
+
+### Required Emacs Version
+
+This configuration is built for Emacs v31 and newer.
+
+### Cloning the Emacs Repository
+
+```sh
+git clone --branch=master git://git.sv.gnu.org/emacs.git
+```
+
+### Configuring Emacs
+
+#### For X11
+
+To configure Emacs for a X11 environment:
+
+```sh
+./configure --with-json --with-libgccjit --with-xpm=ifavailable --with-gif=ifavailable
+````
+
+#### For Wayland
+
+To configure Emacs for a Wayland environment:
+
+```sh
+./configure --with-json --with-libgccjit --with-pgtk
+```
