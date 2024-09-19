@@ -12,7 +12,7 @@ Key features:
 - **No org-mode**: I don’t like it.
 
 ```sh
-git clone https://github.com/jpnt/emacs-config $XDG_CONFIG_HOME/emacs --depth=1
+git clone https://github.com/jpnt/emacs-config ~/.emacs.d --depth=1
 ```
 
 ## Goals
