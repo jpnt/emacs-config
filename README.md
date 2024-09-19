@@ -10,11 +10,8 @@ Key features:
 - **e(vi)l mode**: For vi/vim-style keybindings.
 - **Minimal plugins**: To keep the setup lightweight and maintainable over the years.
 - **No org-mode**: I don’t like it.
-- **Alternative to eglot**: I use `lspce` for LSP support, as it requires less 
-  configuration and is more minimalistic.
 
 ```sh
-git clone https://github.com/zbelial/lspce ~/.emacs.d/lspce --depth=1
 git clone https://github.com/jpnt/emacs-config $XDG_CONFIG_HOME/emacs --depth=1
 ```
 
@@ -27,13 +24,16 @@ git clone https://github.com/jpnt/emacs-config $XDG_CONFIG_HOME/emacs --depth=1
 - **Streamlined Workflow**: Reduce friction, allowing for fast operations without
   plugins or configurations getting in the way.
 - **Basic IDE Features**: Includes Git integration (`magit`), file explorer (`dired`),
-  auto-completion (`company`), and language server protocol (via `lspce`).
+  auto-completion (`company`), and language server protocol (via `eglot`).
 
 ## Installation of emacs from source
 
+This configuration is designed to work with the lastest version of Emacs with some flags enabled so
+building from source is recommended.
+
 ### Required Emacs Version
 
-This configuration is built for Emacs v31 and newer.
+This configuration (Sep 19 2024) is built for Emacs v31 and newer.
 
 ### Cloning the Emacs Repository
 
@@ -57,4 +57,10 @@ To configure Emacs for a Wayland environment:
 
 ```sh
 ./configure --with-json --with-libgccjit --with-pgtk
+```
+
+#### Compile & Install
+
+```sh
+make -j$(proc) && sudo make install
 ```
