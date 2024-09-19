@@ -2,6 +2,9 @@
 ;; Font size
 (set-face-attribute 'default nil :height 140)
 
+;; Built-in project management
+(require 'project)
+
 ;; Restore reasonable garbage collection thresholds after startup
 (add-hook 'emacs-startup-hook
           (lambda () (setq gc-cons-threshold (* 20 1024 1024))))  ;; 20MB
@@ -109,13 +112,6 @@
 ;; Vterm - Terminal emulator
 (use-package vterm
   :bind ("C-c t" . vterm))
-
-;; Projectile - Project management
-(use-package projectile
-  :init (projectile-mode t)
-  :config (setq projectile-enable-caching t)  ;; Cache for faster project switching
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
 
 ;; Auto-completion
 (use-package company
